@@ -1,2 +1,2 @@
 # APIProject
-A Personnal API project for trainaing
+A Personnal API project for training
