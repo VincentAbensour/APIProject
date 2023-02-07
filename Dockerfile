@@ -1,5 +1,5 @@
 FROM python:3.9.16-bullseye
-LABEL maintener="@VincentAbensour"
+LABEL maintainer="@VincentAbensour"
 
 ENV PYTHONUNBUFFERED 1
 
