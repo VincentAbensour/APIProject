@@ -8,6 +8,8 @@ services:
         - DEV=true
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     volumes:
       - ./app:/app
     command: >
@@ -20,7 +22,7 @@ services:
       - DB_USER=devuser
       - DB_PASS=changeme
 
-  db: 
+  db:
     image: postgres:13-alpine
     volumes:
       - dev-db-data:/var/lib/postgresql/data
@@ -28,7 +30,7 @@ services:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
-      
+
 
 volumes:
   dev-db-data:
