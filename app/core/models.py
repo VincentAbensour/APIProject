@@ -7,7 +7,7 @@ class AccountManager(BaseUserManager):
     def create_user(self,firstname,lastname,email,password=None):
         """Create new basic user"""
         if not email:
-            raise ValueError("email adress is missing")
+            raise ValueError("Email adress is missing")
 
         user = self.model(
             email = self.normalize_email(email),
@@ -18,20 +18,20 @@ class AccountManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self,firstname,lastname,username,email,password):
+    def create_superuser(self,firstname,lastname,email,password):
         """Create new superuser"""
         user=self.create_user(
             email = self.normalize_email(email),
-            username = username,
             firstname = firstname,
             lastname = lastname,
             password = password,
         )
 
-        user.is_admin = True
-        user.is_active = True
         user.is_staff = True
-        user.is_superadmin = True
+        user.is_superuser = True
+        user.is_active = True
+        user.is_admin = True
+
 
         user.save()
         return user
@@ -43,6 +43,8 @@ class Account(AbstractBaseUser,PermissionsMixin):
     lastname = models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ["firstname", "lastname"]
