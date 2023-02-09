@@ -18,6 +18,7 @@ class AdminTest(TestCase):
             password = "test123",
             firstname = "testfirst",
             lastname = "testlast")
+        self.client.force_login(self.user)
 
     def account_admin_view(self):
         url = reverse('admin:core_account_change', args=[self.user.id])
@@ -29,4 +30,4 @@ class AdminTest(TestCase):
         url = reverse('admin:core_account_add')
         res = self.client.get(url)
 
-        self.assertEqual(res.status_code, 220)
+        self.assertEqual(res.status_code, 200)
