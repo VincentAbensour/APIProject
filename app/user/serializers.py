@@ -2,23 +2,24 @@
 
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
+from core.models import Account
 
 class UserSerializer(serializers.ModelSerializer):
     """ Serializers For The User Object"""
 
     class Meta:
-        model = get_user_model()
+        model = Account
         fields = ["email","password","firstname","lastname"]
         extra_kwargs = {'password': {'write_only': True, 'min_length': 8 }}
 
     def create(self, validated_data):
         """ Create the user with encrypted password"""
-        return get_user_model().objects.create_user(**validated_data)
+        return Account.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
         """Update The user"""
         user = super().update(instance,validated_data)
-       
+
         return user
 
 class AuthTokenSerializer(serializers.Serializer):
