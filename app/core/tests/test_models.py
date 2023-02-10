@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from core.models import Recipe
 
 class ModelTest(TestCase):
     """Test Basic User"""
@@ -81,3 +82,21 @@ class ModelTest(TestCase):
                                                     lastname = "testlast",
                                                     password = "testpassword")
             self.assertEqual(email[1], user.email)
+
+    def test_create_recipe(self):
+        user = get_user_model().objects.create_user(
+            email = "test@example.com",
+            password = "test1234",
+            firstname = "testfirst",
+            lastname = "testlast"
+        )
+
+        recipe = Recipe.objects.create(
+            user = user,
+            title = 'testrecipe',
+            time = 5,
+            price = 5.50,
+            description = 'test recipe description'
+            )
+        exists = Recipe.objects.filter(title = 'testrecipe', user = user).exists()
+        self.assertTrue(exists)

@@ -53,3 +53,15 @@ class Account(AbstractBaseUser,PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class Recipe(models.Model):
+    """Recipe Object"""
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    time = models.IntegerField()
+    price = models.FloatField()
+    description = models.TextField(blank=True)
+    link = models.CharField(max_length=150, blank=True)
+
+    def __str__(self):
+        return self.title
